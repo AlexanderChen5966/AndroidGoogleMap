@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Google Maps JavaScript API v3 Example: Marker Animations</title>
+    <link href="/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script>
+      // var lating = new google.maps.LatLng(25.052812, 121.544464); //UCOM
+      var geocoder;
+      var map;
+
+      function initialize(a,b) {
+      	var lating = new google.maps.LatLng(a,b); //UCOM
+        geocoder =new google.maps.Geocoder();
+
+      	
+        var mapOptions = {
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          center: lating
+        };
+        map = new google.maps.Map(document.getElementById('map_canvas'),
+                mapOptions);  
+        mapMarker = new google.maps.Marker(
+			{	position:lating,
+				title:"Ucom Education Center",
+				icon:"http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+				/*animation:google.maps.Animation.DROP*/}
+				);
+		mapMarker.setMap(map);              
+      }
+      
+      function goto(address){
+  		 geocoder.geocode({'address': address },function(results, status){      
+     		if(status == google.maps.GeocoderStatus.OK){        
+	       		map.setCenter(results[0].geometry.location);        
+	       		var marker =new google.maps.Marker({ 
+	         	map: map,
+	         	position: results[0].geometry.location 
+       	});
+       }   
+     });  
+   }
+    </script>
+  </head>
+  <body onload="initialize()">
+    <div id="map_canvas" style="width: device-width; height: 460px;">map div</div>
+  </body>
+</html>
